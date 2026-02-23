@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Smart Job Portal</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="app-header">
+    <div class="app-header-title">Smart Job Portal</div>
+    <div class="app-header-nav">
+        <a href="/login" class="btn btn-primary">Login</a>
+        <a href="/signup" class="btn btn-secondary">Sign Up</a>
+    </div>
+</header>
+
+<main class="layout-main">
+    <section class="home-hero">
+        <h1 class="home-title">Find Your Next Opportunity</h1>
+        <p class="home-subtitle">
+            Job seekers discover curated roles. Recruiters hire the right talent faster.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <a href="/signup" class="btn btn-primary">Get Started</a>
+            <a href="/login" class="btn btn-secondary">I already have an account</a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

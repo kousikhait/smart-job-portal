@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Job</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="app-header">
+    <div class="app-header-title">Smart Job Portal</div>
+    <div class="app-header-nav">
+        <a href="/recruiter/jobs" class="btn btn-secondary">My Jobs</a>
+        <a href="/logout" class="btn btn-ghost">Logout</a>
+    </div>
+</header>
+
+<main class="layout-main">
+<div class="card form-card">
+<h2>Add New Job</h2>
+
+<form th:action="@{/recruiter/add-job}" th:object="${job}" method="post" class="stack">
+
+    <div class="form-field">
+        <label>Title</label>
+        <input type="text" th:field="*{title}" required />
+    </div>
+
+    <div class="form-field">
+        <label>Description</label>
+        <input type="text" th:field="*{description}" required />
+    </div>
+
+    <div class="form-field">
+        <label>Location</label>
+        <input type="text" th:field="*{location}" required />
+    </div>
+
+    <div class="form-field">
+        <label>Salary (per year)</label>
+        <input type="number" th:field="*{salary}" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Post Job</button>
+
+</form>
+
+</div>
+</main>
+
+</body>
+</html>

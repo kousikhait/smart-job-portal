@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Jobs</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="app-header">
+    <div class="app-header-title">Smart Job Portal</div>
+    <div class="app-header-nav">
+        <a href="/recruiter/dashboard" class="btn btn-secondary">Applications</a>
+        <a href="/recruiter/add-job" class="btn btn-primary">Add Job</a>
+        <a href="/logout" class="btn btn-ghost">Logout</a>
+    </div>
+</header>
+
+<main class="layout-main">
+    <h2 class="page-title">My Posted Jobs</h2>
+
+    <div th:if="${#lists.isEmpty(jobs)}" class="muted">
+        You haven't posted any jobs yet. Click "Add Job" to create your first listing.
+    </div>
+
+    <div th:each="job : ${jobs}" class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title" th:text="${job.title}"></div>
+                <div class="muted" th:text="${job.location}"></div>
+            </div>
+        </div>
+
+        <form th:action="@{/recruiter/delete-job/{id}(id=${job.id})}" method="post">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

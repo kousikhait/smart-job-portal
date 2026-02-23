@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Jobs</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="app-header">
+    <div class="app-header-title">Smart Job Portal</div>
+    <div class="app-header-nav">
+        <a href="/logout" class="btn btn-ghost">Logout</a>
+    </div>
+</header>
+
+<main class="layout-main">
+
+<div th:if="${recommendedJobs != null}">
+    <div class="page-actions">
+        <h2 class="page-title">Recommended for you</h2>
+    </div>
+
+    <div th:each="job : ${recommendedJobs}" class="card">
+
+        <div class="card-header">
+            <div>
+                <div class="card-title" th:text="${job.title}"></div>
+                <div class="muted" th:text="${job.location}"></div>
+            </div>
+            <div class="pill">
+                ₹<span th:text="${job.salary}"></span> / year
+            </div>
+        </div>
+
+        <p class="muted" th:text="${job.description}"></p>
+
+        <div th:if="${appliedJobIds != null and appliedJobIds.contains(job.id)}">
+            <span class="badge badge-muted">Already applied</span>
+        </div>
+
+        <div th:if="${job.applyUrl != null}">
+            <a th:href="${job.applyUrl}" class="btn btn-primary" target="_blank">Apply on site</a>
+        </div>
+    </div>
+
+    <hr style="margin: 24px 0;">
+</div>
+
+<div class="page-actions">
+    <h2 class="page-title">All Jobs</h2>
+</div>
+
+<div th:each="job : ${jobs}" class="card">
+
+    <div class="card-header">
+        <div>
+            <div class="card-title" th:text="${job.title}"></div>
+            <div class="muted" th:text="${job.location}"></div>
+        </div>
+        <div class="pill">
+            ₹<span th:text="${job.salary}"></span> / year
+        </div>
+    </div>
+
+    <p class="muted" th:text="${job.description}"></p>
+
+    <div th:if="${appliedJobIds != null and appliedJobIds.contains(job.id)}">
+        <span class="badge badge-muted">Already applied</span>
+    </div>
+
+    <div th:unless="${appliedJobIds != null and appliedJobIds.contains(job.id)}">
+        <div th:if="${job.applyUrl != null}">
+            <a th:href="${job.applyUrl}" class="btn btn-primary" target="_blank">Apply on site</a>
+        </div>
+
+        <div th:if="${job.applyUrl == null}">
+            <form th:action="@{/apply/{id}(id=${job.id})}"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <input type="file" name="resume" required />
+                <button type="submit" class="btn btn-primary" style="margin-top: 8px;">Apply</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+</main>
+
+</body>
+</html>

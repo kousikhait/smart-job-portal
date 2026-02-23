@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recruiter Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="app-header">
+    <div class="app-header-title">Smart Job Portal</div>
+    <div class="app-header-nav">
+        <a href="/recruiter/jobs" class="btn btn-secondary">My Jobs</a>
+        <a href="/recruiter/add-job" class="btn btn-primary">Add Job</a>
+        <a href="/logout" class="btn btn-ghost">Logout</a>
+    </div>
+</header>
+
+<main class="layout-main">
+    <h2 class="page-title">Applications For Your Jobs</h2>
+
+    <div th:if="${#lists.isEmpty(applications)}" class="muted">
+        No applications yet. Once candidates apply to your jobs, they will appear here.
+    </div>
+
+    <div th:each="app : ${applications}" class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title" th:text="${app.job.title}"></div>
+                <div class="muted">
+                    Applicant:
+                    <span th:text="${app.user.name}"></span>
+                    &middot;
+                    <span th:text="${app.user.email}"></span>
+                </div>
+            </div>
+            <span class="badge badge-warning"
+                  th:classappend="${app.status == 'APPROVED' ? ' badge-success' : (app.status == 'REJECTED' ? ' badge-muted' : ' badge-warning')}"
+                  th:text="${app.status}">STATUS</span>
+        </div>
+
+        <div class="stack-row" style="margin-top: 8px;">
+            <a th:href="@{/recruiter/resume/{fileName}(fileName=${app.resumeFileName})}"
+               class="btn btn-secondary">
+                Download Resume
+            </a>
+
+            <form th:action="@{/recruiter/update-status/{id}(id=${app.id})}" method="post" class="stack-row">
+                <button name="status" value="APPROVED" class="btn btn-primary">Approve</button>
+                <button name="status" value="REJECTED" class="btn btn-danger">Reject</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
