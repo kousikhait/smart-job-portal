@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recruiter Dashboard</title>
+</head>
+<body>
+
+<h2>Applications For Your Jobs</h2>
+
+<div th:each="app : ${applications}">
+    <h3 th:text="${app.job.title}"></h3>
+    <p>Applicant: <span th:text="${app.user.name}"></span></p>
+    <p>Email: <span th:text="${app.user.email}"></span></p>
+    <p>Status: <span th:text="${app.status}"></span></p>
+    <a th:href="@{/resume/{fileName}(fileName=${app.resumeFileName})}">
+    Download Resume
+</a>
+
+    <form th:action="@{/recruiter/update-status/{id}(id=${app.id})}" method="post">
+        <button name="status" value="APPROVED">Approve</button>
+        <button name="status" value="REJECTED">Reject</button>
+    </form>
+
+    <hr>
+</div>
+
+</body>
+</html>

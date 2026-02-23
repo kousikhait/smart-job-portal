@@ -1,0 +1,14 @@
+<h2>My Posted Jobs</h2>
+
+<a href="/recruiter/add-job">Add New Job</a>
+
+<div th:each="job : ${jobs}">
+    <h3 th:text="${job.title}"></h3>
+    <p th:text="${job.location}"></p>
+
+    <form th:action="@{/recruiter/delete-job/{id}(id=${job.id})}" method="post">
+        <button>Delete</button>
+    </form>
+
+    <hr>
+</div>

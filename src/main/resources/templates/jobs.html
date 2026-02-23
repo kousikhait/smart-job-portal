@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Jobs</title>
+</head>
+<body>
+
+<h2>Available Jobs</h2>
+<div th:each="job : ${jobs}">
+
+    <h3 th:text="${job.title}"></h3>
+    <p th:text="${job.description}"></p>
+    <p>Location: <span th:text="${job.location}"></span></p>
+    <p>Salary: <span th:text="${job.salary}"></span></p>
+
+    <div th:if="${appliedJobIds != null and appliedJobIds.contains(job.id)}">
+        <button disabled>Applied</button>
+    </div>
+
+    <div th:unless="${appliedJobIds != null and appliedJobIds.contains(job.id)}">
+       <form th:action="@{/apply/{id}(id=${job.id})}"
+      method="post"
+      enctype="multipart/form-data">
+
+    <input type="file" name="resume" required />
+    <button type="submit">Apply</button>
+</form>
+    </div>
+
+    <hr>
+</div>
+
+</body>
+</html>
